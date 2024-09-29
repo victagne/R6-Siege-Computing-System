@@ -1,0 +1,15 @@
+# Python venv
+.venv
+venv
+
+# Python bytecode
+__pycache__
+
+# caches
+.mypy_cache
+.pytest_cache
+
+# project-specific files
+input/
+output/
+merged_matches.log
