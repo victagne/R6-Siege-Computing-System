@@ -15,7 +15,8 @@ def calculate_player_top_matches(log_path: str, output_dir: Optional[str] = 'out
 
     Args:
         log_path (str): log file containing players' match data
-        output_dir (Optional[str]): output dictory, default to output
+        output_dir (Optional[str]): output dictory, default to 'output'
+        n (int): top n kills, default to 10
 
     Returns:
         None
@@ -26,8 +27,8 @@ def calculate_player_top_matches(log_path: str, output_dir: Optional[str] = 'out
     # {player1: {match1: 2, match2: 5, ...}, ...}
     player_kills = defaultdict(lambda: defaultdict(int))
 
-    with open(log_path, 'r') as file:
-        for line in file:
+    with open(log_path, 'r') as f:
+        for line in f:
             player_id, match_id, operator_id, nb_kills = line.strip().split(',')
             nb_kills = int(nb_kills)
             player_kills[player_id][match_id] += nb_kills
@@ -35,12 +36,12 @@ def calculate_player_top_matches(log_path: str, output_dir: Optional[str] = 'out
     current_date = datetime.now().strftime('%Y%m%d')
     output_file = os.path.join(output_dir, f'player_top10_{current_date}.txt')
 
-    with open(output_file, 'w') as file:
+    with open(output_file, 'w') as f:
         for player_id, matches in player_kills.items():
             # sort in descending order by kills and take top n
             top_matches = sorted(matches.items(), key=lambda item: item[1], reverse=True)[:n]
             match_results = ','.join([f"{match_id}:{kills}" for match_id, kills in top_matches])
-            file.write(f"{player_id}|{match_results}\n")
+            f.write(f"{player_id}|{match_results}\n")
 
     logging.info(f"Top 10 matches in terms of kills by player written to {output_file}.")
 

@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 def calculate_operator_avg_kills(log_path: str, output_dir: Optional[str] = 'output') -> None:
     """
     Calculate the average number of kills for each operator from a log file
-    and write the result into output/operator_top100_YYYYMMDD.txt.
+    and write the result into output_dir/operator_top100_YYYYMMDD.txt.
 
     Args:
         log_path (str): log file containing player's match data
@@ -35,13 +35,13 @@ def calculate_operator_avg_kills(log_path: str, output_dir: Optional[str] = 'out
                 nb_kills = int(nb_kills)
                 operator_match_kills[operator_id][match_id].append(nb_kills)
             except ValueError as e:
-                logging.error(f"Skipping malformed line: {line.strip()}, {e}")
+                logging.error(f"Skipping corrupted line: {line.strip()} - {e}")
                 continue
 
     today_str = datetime.now().strftime('%Y%m%d')
     output_file = os.path.join(output_dir, f'operator_top100_{today_str}.txt')
 
-    with open(output_file, 'w') as outfile:
+    with open(output_file, 'w') as f:
         for operator_id, matches in operator_match_kills.items():
             match_avg_kills = []
             for match_id, kills in matches.items():
@@ -53,7 +53,7 @@ def calculate_operator_avg_kills(log_path: str, output_dir: Optional[str] = 'out
             top_100_matches = match_avg_kills[:100]
 
             formatted_kills = ','.join([f"{match_id}:{avg_kills}" for match_id, avg_kills in top_100_matches])
-            outfile.write(f"{operator_id}|{formatted_kills}\n")
+            f.write(f"{operator_id}|{formatted_kills}\n")
 
     # sort output by operator id
     sort_file_by_operator_id(output_file)

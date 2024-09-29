@@ -3,7 +3,7 @@ import uuid
 import random
 import argparse
 from datetime import datetime, timedelta
-from utils import clear_directory, prepare_folder
+from utils import clear_folder, prepare_folder
 import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -33,7 +33,7 @@ def generate_and_write_data(num_rows: int, max_operator_id: int, max_kills: int,
         filename = os.path.join(output_dir, f"r6-matches-{current_date}.log")
 
         # Generate rows and write file
-        with open(filename, "w") as file:
+        with open(filename, "w") as f:
             for _ in range(num_rows):
                 # If we use uuid.uuid4(), play_ids and match_ids are almost unique, but in real case, they can be same.
                 # So here we only keep the first 4 bits of UUID to make some duplications intentionally.
@@ -43,7 +43,7 @@ def generate_and_write_data(num_rows: int, max_operator_id: int, max_kills: int,
                 nb_kills = random.randint(0, max_kills)
 
                 row = f"{player_id}, {match_id}, {operator_id}, {nb_kills}"
-                file.write(row + "\n")
+                f.write(row + "\n")
 
         logging.info(f"File {filename} is created.")
 
@@ -61,8 +61,8 @@ def main():
     args = parser.parse_args()
 
     # Clean input and output folders
-    clear_directory('input')
-    clear_directory('output')
+    clear_folder('input')
+    clear_folder('output')
 
     # Generate and write data
     generate_and_write_data(args.num_rows, args.max_operator_id, args.max_kills, args.days)

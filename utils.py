@@ -5,12 +5,12 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-def clear_directory(dir_path: str) -> None:
+def clear_folder(dir_path: str) -> None:
     """
-    Clear a specified directory.
+    Clear a specified folder.
 
     Args:
-        dir_path (str): the directory to be cleared.
+        dir_path (str): the folder to be cleared.
 
     Returns:
         None
@@ -25,9 +25,9 @@ def clear_directory(dir_path: str) -> None:
 
 def prepare_folder(dir_path: str) -> None:
     """
-    Create a directory if it does not exist
+    Create a folder if it does not exist
     Args:
-        dir_path (str): the path of the directory to be created
+        dir_path (str): the path of the folder to be created
     Returns:
         None
     """
@@ -46,8 +46,8 @@ def sort_file_by_operator_id(file_path: str) -> None:
     """
     operator_data = []
 
-    with open(file_path, 'r') as file:
-        for line in file:
+    with open(file_path, 'r') as f:
+        for line in f:
             line = line.strip()
             if line:
                 operator_id, matches = line.split('|')
@@ -55,6 +55,6 @@ def sort_file_by_operator_id(file_path: str) -> None:
 
     sorted_data = sorted(operator_data, key=lambda x: x[0])
 
-    with open(file_path, 'w') as file:
+    with open(file_path, 'w') as f:
         for operator_id, matches in sorted_data:
-            file.write(f"{operator_id}|{matches}\n")
+            f.write(f"{operator_id}|{matches}\n")
