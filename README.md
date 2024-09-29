@@ -1,6 +1,6 @@
 # R6 Siege Computing System - Data Processing
 
-## 1. Table of Contents
+## Table of Contents
 
 - [Background](#background)
 - [Objective](#objective)
@@ -9,7 +9,7 @@
 - [Usage](#usage)
 - [Author](#author)
 
-## 2. Background
+## Background
 
 Rainbow Six Siege (R6 Siege) is a first-person shooter game. We are receiving each day in a folder, a text file named `r6-matches-YYYYMMDD.log` that contains the logs of the whole matches made on R6 Siege at this date and in which the format is specified as follows.
 
@@ -20,14 +20,14 @@ Rainbow Six Siege (R6 Siege) is a first-person shooter game. We are receiving ea
 - `operator_id`: Operator unique identifier, an integer. There are dozens of operators available in the game.
 - `nb_kills`: Number of kills by the player, an integer.
 
-## 3. Objective
+## Objective
 
 We need to suggest a system that computes:
 
 - `Daily Operator Performance Analysis`: Compute and generate a text file (`operator_top100_YYYYMMDD.txt`) containing the top 100 operators based on the average number of kills over the last 7 days. Each row will follow the format: `operator_id|match_id1:avg_kills1,match_id2:avg_kills2,...,match_id100:avg_kills100`, where `avg_kills` is the average number of kills for the operator in the top 100 matches, listed in descending order.
 - `Top Player Matches`: Generate a text file (`player_top10_YYYYMMDD.txt`) that ranks the top 10 players with the highest number of kills in individual matches over the past 7 days. Each row will follow the format:`player_id|match_id1:nb_kills1,match_id2:nb_kills2,...,match_id10:nb_kills10`, where `nb_kills` represents the number of kills for each player per match, in descending order.
 
-## 4. Installation
+## Installation
 
 ### Prerequisites
 
@@ -42,7 +42,7 @@ python3.11 -m venv venv
 source venv/bin/activate
 ```
 
-## 5. Project Structure
+## Project Structure
 
 ```plaintext
 ├── Makefile
@@ -66,7 +66,7 @@ source venv/bin/activate
 ├── utils.py
 ```
 
-## 6. Usage
+## Usage
 
 ### Run application in test mode
 
@@ -93,7 +93,7 @@ make schedule
 
 The cron job will daily compute operator and player statistical results from `input` folder and persist results into `output` folder as the previous test mode.
 
-## 7. Author
+## Author
 
 - Lifeng Wan
 - lifeng.wan.mtl@gmail.com
