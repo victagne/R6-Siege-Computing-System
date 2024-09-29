@@ -10,6 +10,7 @@ __pycache__
 .pytest_cache
 
 # project-specific files
+.idea/
 input/
 output/
 merged_matches.log
